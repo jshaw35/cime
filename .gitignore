@@ -27,3 +27,6 @@ components
 libraries
 share
 test_coverage/**
+
+# Ignore python notebook checkpoints:
+**/.ipynb_checkpoints/*

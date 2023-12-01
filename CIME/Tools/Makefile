@@ -870,9 +870,21 @@ ifeq ($(OCN_SUBMODEL),moby)
   ULIBDEP += $(LIBROOT)/libmoby.a
 endif
 
+#ifdef COSP_LIBDIR
+#  ifeq ($(CIME_MODEL),cesm)
+#    ULIBDEP += $(COSP_LIBDIR)/libcosp.a
+#  endif
+#endif
+
 ifdef COSP_LIBDIR
   ifeq ($(CIME_MODEL),cesm)
     ULIBDEP += $(COSP_LIBDIR)/libcosp.a
+    # Additionally include RTTOV
+    ULIBDEP += $(COSP_LIBDIR)/librttov13_brdf_atlas.a $(COSP_LIBDIR)/librttov13_emis_atlas.a $(COSP_LIBDIR)/librttov13_mw_scatt.a $(COSP_LIBDIR)/librttov13_other.a $(COSP_LIBDIR)/librttov13_coef_io.a $(COSP_LIBDIR)/librttov13_parallel.a $(COSP_LIBDIR)/librttov13_main.a
+    # Additionally include RTTOV if asked
+#    ifeq ($(findstring -rttov,$(CAM_CONFIG_OPTS)),-rttov)
+#      ULIBDEP += $(COSP_LIBDIR)/librttov13_brdf_atlas.a $(COSP_LIBDIR)/librttov13_emis_atlas.a $(COSP_LIBDIR)/librttov13_mw_scatt.a $(COSP_LIBDIR)/librttov13_other.a $(COSP_LIBDIR)/librttov13_coef_io.a $(COSP_LIBDIR)/librttov13_hdf.a $(COSP_LIBDIR)/librttov13_parallel.a $(COSP_LIBDIR)/librttov13_main.a
+#    endif
   endif
 endif
 
@@ -1022,6 +1034,7 @@ clean_depends: clean_dependsatm clean_dependscpl clean_dependswav clean_dependsg
 cleanatm:
 	$(RM) -f $(LIBROOT)/libatm.a
 	$(RM) -fr $(EXEROOT)/atm/obj
+	$(RM) -f $(COSP_LIBDIR)/libcosp.a
 
 cleancpl:
 	$(RM) -fr $(EXEROOT)/cpl/obj
