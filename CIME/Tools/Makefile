@@ -887,6 +887,20 @@ endif
 ifdef COSP_LIBDIR
   ifeq ($(CIME_MODEL),cesm)
     ULIBDEP += $(COSP_LIBDIR)/libcosp.a
+    # Additionally include RTTOV if asked via CAM_CONFIG_OPTS. Could avoid copying the RTTOV library where the COSP library is built by passing a rttov_libdir value via CAM_CONFIG_OPTS
+    ifeq ($(findstring -rttov,$(CAM_CONFIG_OPTS)),-rttov)
+      ULIBDEP += $(COSP_LIBDIR)/librttov_wrapper.a $(COSP_LIBDIR)/librttov_mw_scatt.a $(COSP_LIBDIR)/librttov_brdf_atlas.a $(COSP_LIBDIR)/librttov_emis_atlas.a  $(COSP_LIBDIR)/librttov_other.a $(COSP_LIBDIR)/librttov_parallel.a $(COSP_LIBDIR)/librttov_coef_io.a $(COSP_LIBDIR)/librttov_hdf.a $(COSP_LIBDIR)/librttov_main.a
+      # ifdef RTTOV_LIBDIR
+      #   ULIBDEP += $(RTTOV_LIBDIR)/librttov_wrapper.a $(RTTOV_LIBDIR)/librttov_mw_scatt.a $(RTTOV_LIBDIR)/librttov_brdf_atlas.a $(RTTOV_LIBDIR)/librttov_emis_atlas.a $(RTTOV_LIBDIR)/librttov_other.a $(RTTOV_LIBDIR)/librttov_parallel.a $(RTTOV_LIBDIR)/librttov_coef_io.a $(RTTOV_LIBDIR)/librttov_hdf.a $(RTTOV_LIBDIR)/librttov_main.a
+      # else
+      #   ULIBDEP += $(COSP_LIBDIR)/librttov_wrapper.a $(COSP_LIBDIR)/librttov_mw_scatt.a $(COSP_LIBDIR)/librttov_brdf_atlas.a $(COSP_LIBDIR)/librttov_emis_atlas.a  $(COSP_LIBDIR)/librttov_other.a $(COSP_LIBDIR)/librttov_parallel.a $(COSP_LIBDIR)/librttov_coef_io.a $(COSP_LIBDIR)/librttov_hdf.a $(COSP_LIBDIR)/librttov_main.a
+      # endif
+      # Old working version on Cheyenne
+      # ULIBDEP += $(COSP_LIBDIR)/librttov13_brdf_atlas.a $(COSP_LIBDIR)/librttov13_emis_atlas.a $(COSP_LIBDIR)/librttov13_mw_scatt.a $(COSP_LIBDIR)/librttov13_other.a $(COSP_LIBDIR)/librttov13_coef_io.a $(COSP_LIBDIR)/librttov13_hdf.a $(COSP_LIBDIR)/librttov13_parallel.a $(COSP_LIBDIR)/librttov13_main.a
+      # Old working version when compiling without HDF
+      # ULIBDEP += $(COSP_LIBDIR)/librttov13_brdf_atlas.a $(COSP_LIBDIR)/librttov13_emis_atlas.a $(COSP_LIBDIR)/librttov13_mw_scatt.a $(COSP_LIBDIR)/librttov13_other.a $(COSP_LIBDIR)/librttov13_coef_io.a $(COSP_LIBDIR)/librttov13_parallel.a $(COSP_LIBDIR)/librttov13_main.a
+      # ULIBDEP += $(COSP_LIBDIR)/librttov_wrapper.a $(COSP_LIBDIR)/librttov_mw_scatt.a $(COSP_LIBDIR)/librttov_brdf_atlas.a $(COSP_LIBDIR)/librttov_emis_atlas.a  $(COSP_LIBDIR)/librttov_other.a $(COSP_LIBDIR)/librttov_parallel.a $(COSP_LIBDIR)/librttov_coef_io.a $(COSP_LIBDIR)/librttov_hdf.a $(COSP_LIBDIR)/librttov_main.a
+    endif
   endif
 endif
 
