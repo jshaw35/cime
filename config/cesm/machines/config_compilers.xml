@@ -258,6 +258,7 @@ using a fortran linker.
     <append MPILIB="openmpi"> -mkl=cluster </append>
     <append MPILIB="impi"> -mkl=cluster </append>
     <append MPILIB="mpi-serial"> -mkl </append>
+    <append> -L$(NCAR_LDFLAGS_HDF5) -lhdf5_fortran -lhdf5_hl_fortran -lhdf5 </append>
   </SLIBS>
   <SUPPORTS_CXX>TRUE</SUPPORTS_CXX>
 </compiler>
